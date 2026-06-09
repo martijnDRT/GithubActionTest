@@ -1,9 +1,7 @@
 import requests, os, pathlib
 
-USERNAME = "mayaforyou247"
-# os.environ["CB_USERNAME"]
-WEBHOOK  = "https://discordapp.com/api/webhooks/1514000611513864382/foeBVNhf0m1PmVh_mEcGeWMUHuWZZQMXMMbkT5NNgoYleDVsXSTB0NrDQGoEvfUbkv7u"
-# os.environ["DISCORD_WEBHOOK"]
+USERNAME =  os.environ["CB_USERNAME"]
+WEBHOOK  = os.environ["DISCORD_WEBHOOK"]
 # STATE    = pathlib.Path("last_state.txt")
 
 def is_online():
