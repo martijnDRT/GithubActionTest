@@ -1,6 +1,7 @@
 import requests, os, pathlib
 
-USERNAME = os.environ["CB_USERNAME"]
+USERNAME = mayaforyou247
+# os.environ["CB_USERNAME"]
 WEBHOOK  = os.environ["DISCORD_WEBHOOK"]
 STATE    = pathlib.Path("last_state.txt")
 
