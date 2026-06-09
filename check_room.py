@@ -5,13 +5,23 @@ WEBHOOK  = os.environ["DISCORD_WEBHOOK"]
 # STATE    = pathlib.Path("last_state.txt")
 
 def is_online():
-    r = requests.get(
-        "https://chaturbate.com/api/public/affiliates/onlinerooms/",
-        params={"wm": "NONE", "limit": 500},
-        timeout=10
-    )
-    rooms = [x["username"].lower() for x in r.json()["results"]]
-    return USERNAME.lower() in rooms
+
+
+    url = "https://chaturbate.com/api/public/affiliates/onlinerooms/?format=json"
+    rooms = requests.get(url).json()
+
+    for room in rooms:
+        if room.get("username", "").lower() == model_username.lower():
+            return True
+
+    return False
+    # r = requests.get(
+    #     "https://chaturbate.com/api/public/affiliates/onlinerooms/",
+    #     params={"wm": "NONE", "limit": 500},
+    #     timeout=10
+    # )
+    # rooms = [x["username"].lower() for x in r.json()["results"]]
+    # return USERNAME.lower() in rooms
 
 def notify():
     requests.post(WEBHOOK, json={
