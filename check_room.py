@@ -32,7 +32,7 @@ def notify():
 
 # was_online = STATE.exists() and STATE.read_text().strip() == "online"
 was_online = False
-online_now = is_online()
+online_now = is_online(USERNAME)
 
 if online_now and not was_online:
     notify()
