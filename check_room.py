@@ -6,22 +6,35 @@ WEBHOOK  = os.environ["DISCORD_WEBHOOK"]
 
 def is_online():
 
-
     url = "https://chaturbate.com/api/public/affiliates/onlinerooms/?format=json"
-    rooms = requests.get(url).json()
+    response = requests.get(url)
+    response.raise_for_status()
+
+    data = response.json()
+
+    # The API returns a dict with a key "rooms"
+    rooms = data.get("rooms", [])
 
     for room in rooms:
         if room.get("username", "").lower() == model_username.lower():
             return True
 
     return False
-    # r = requests.get(
-    #     "https://chaturbate.com/api/public/affiliates/onlinerooms/",
-    #     params={"wm": "NONE", "limit": 500},
-    #     timeout=10
-    # )
-    # rooms = [x["username"].lower() for x in r.json()["results"]]
-    # return USERNAME.lower() in rooms
+    # url = "https://chaturbate.com/api/public/affiliates/onlinerooms/?format=json"
+    # rooms = requests.get(url).json()
+
+    # for room in rooms:
+    #     if room.get("username", "").lower() == model_username.lower():
+    #         return True
+
+    # return False
+    # # r = requests.get(
+    # #     "https://chaturbate.com/api/public/affiliates/onlinerooms/",
+    # #     params={"wm": "NONE", "limit": 500},
+    # #     timeout=10
+    # # )
+    # # rooms = [x["username"].lower() for x in r.json()["results"]]
+    # # return USERNAME.lower() in rooms
 
 def notify():
     requests.post(WEBHOOK, json={
