@@ -21,7 +21,7 @@ def notify():
     })
 
 # was_online = STATE.exists() and STATE.read_text().strip() == "online"
-was_online = false
+was_online = False
 online_now = is_online()
 
 if online_now and not was_online:
