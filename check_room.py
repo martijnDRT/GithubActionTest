@@ -19,13 +19,16 @@ def notify():
         "content": f"🟢 **{USERNAME}** is live on Chaturbate!\nhttps://chaturbate.com/{USERNAME}/"
     })
 
-was_online = STATE.exists() and STATE.read_text().strip() == "online"
+# was_online = STATE.exists() and STATE.read_text().strip() == "online"
+was_online = false
 online_now = is_online()
 
 if online_now and not was_online:
     notify()
     print("Notification sent")
+    was_online = online_now
 else:
+    was_online = online_now
     print("Online" if online_now else "Offline — no notification sent")
 
 STATE.write_text("online" if online_now else "offline")
