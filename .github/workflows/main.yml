@@ -1,0 +1,36 @@
+name: Check Chaturbate room
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'   # every 5 minutes
+  workflow_dispatch:          # allow manual trigger
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore state cache
+        uses: actions/cache@v4
+        with:
+          path: last_state.txt
+          key: cb-state-${{ secrets.CB_USERNAME }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install requests
+
+      - name: Run checker
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          CB_USERNAME: ${{ secrets.CB_USERNAME }}
+        run: python check_room.py
+
+      - name: Save state cache
+        uses: actions/cache@v4
+        with:
+          path: last_state.txt
+          key: cb-state-${{ secrets.CB_USERNAME }}
